@@ -1,5 +1,7 @@
 package com.nome.service.base;
 
+import java.util.List;
+
 /**
  * @author yzh
  *
@@ -13,6 +15,12 @@ public interface BaseService<T> {
 		
 	    public int update(T t);
 	    
-	    public T queryOne(int id);
+	    public T queryOneById(int id);
+	    
+	    public List<T> queryListPram(Object t);
+	    
+	    public List<T> queryList();
+	    
+	    public T  queryOne(Object t);
 	
 }

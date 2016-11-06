@@ -9,6 +9,17 @@
   <sql id="Base_Column_List" >
     id, time, user_id
   </sql>
+  
+  <!-- 按参数得到用户所有提问-->
+	<select id="queryListPram" resultMap="BaseResultMap"  parameterType="java.lang.Integer" >
+		select *  from question where user_id = #{userId}
+	</select>
+  
+  	<!-- 按参数得到所有提问-->
+	<select id="queryList" resultMap="BaseResultMap"  parameterType="java.lang.Integer" >
+		select *  from question 
+	</select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

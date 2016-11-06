@@ -1,5 +1,7 @@
 package com.nome.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment> implements Comm
 		super.setBaseDao(commentMapper);
 	}
 	
-	
+	@Override
+	public List<Comment> queryListPram1(Object t) {
+		return commentMapper.queryListPram1(t);
+	}
 	
 }

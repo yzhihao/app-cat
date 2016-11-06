@@ -15,6 +15,17 @@
   <sql id="Base_Column_List" >
     id, title, app_id, user_id, time, question_id
   </sql>
+  
+  <!-- 按参数得到用户所有回答-->
+	<select id="queryListPram" resultMap="BaseResultMap"  parameterType="java.lang.Integer" >
+		select *  from answer where user_id = #{userId}
+	</select>
+  
+  <!-- 按参数得到特定问题所有回答-->
+	<select id="queryListPram1" resultMap="BaseResultMap"  parameterType="java.lang.Integer" >
+		select *  from answer where  question_id = #{questionId}
+	</select>
+  
   <sql id="Blob_Column_List" >
     content
   </sql>

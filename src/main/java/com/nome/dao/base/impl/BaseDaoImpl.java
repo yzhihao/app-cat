@@ -1,7 +1,6 @@
 package com.nome.dao.base.impl;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -21,7 +20,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	@Resource
 	protected SqlSessionTemplate sqlSession;
 
-	private Class<T> clazz;
+	protected Class<T> clazz;
 	   
 	@SuppressWarnings("unchecked")
 	public void getclass () {
@@ -58,5 +57,23 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	public int updateByPrimaryKey(T t) {
 		getclass ();
 		return  sqlSession.update(NameSpaceUtil.getNameSpace(clazz.getName())+".updateByPrimaryKey",t);
+	}
+	
+	@Override
+	public List<T> queryList() {
+		 getclass ();
+		 return  sqlSession.selectList(NameSpaceUtil.getNameSpace(clazz.getName())+".queryList");
+	}
+
+	@Override
+	public List<T> queryListPram(Object t) {
+		 getclass ();
+		 return  sqlSession.selectList(NameSpaceUtil.getNameSpace(clazz.getName())+".queryListPram",t);
+	}
+
+	@Override
+	public T queryOne(Object t) {
+		getclass ();
+		return sqlSession.selectOne(NameSpaceUtil.getNameSpace(clazz.getName())+".queryOne", t);
 	}
 }

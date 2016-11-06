@@ -1,5 +1,7 @@
 package com.nome.service.base.impl;
 
+import java.util.List;
+
 import com.nome.dao.base.BaseDao;
 import com.nome.service.base.BaseService;
 
@@ -10,7 +12,7 @@ import com.nome.service.base.BaseService;
  */
 public class BaseServiceImpl<T> implements BaseService<T> {
 
-	private BaseDao<T> baseDao;
+	protected BaseDao<T> baseDao;
 
 	protected void setBaseDao(BaseDao<T> baseDao) {
 		this.baseDao = baseDao;
@@ -32,8 +34,24 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	@Override
-	public T queryOne(int id) {
+	public T queryOneById(int id)
+	{
 		return baseDao.selectByPrimaryKey(id);
 	}
+	
 
+	@Override
+	public List<T> queryList() {
+		return baseDao.queryList();
+	}
+
+	@Override
+	public T queryOne(Object t) {
+		return baseDao.queryOne(t);
+	}
+
+	@Override
+	public List<T> queryListPram(Object t) {
+		return baseDao.queryListPram(t);
+	}
 }

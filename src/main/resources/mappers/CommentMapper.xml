@@ -8,19 +8,29 @@
     <result column="time" property="time" jdbcType="VARCHAR" />
     <result column="contend" property="contend" jdbcType="VARCHAR" />
   </resultMap>
+  
   <sql id="Base_Column_List" >
     id, app_id, user_id, time, contend
   </sql>
+  
+  <!--  按参数得到用户的评论-->
+	<select id="queryListPram" resultMap="BaseResultMap"  parameterType="java.lang.Integer" >
+		select *  from comment where user_id = #{userId}
+	</select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from comment
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from comment
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
   <insert id="insert" parameterType="com.nome.po.Comment" >
     insert into comment (id, app_id, user_id, 
       time, contend)
