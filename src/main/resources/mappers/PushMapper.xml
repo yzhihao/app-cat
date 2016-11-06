@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nome.dao.PushMapper" >
+  <resultMap id="BaseResultMap" type="com.nome.po.Push" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="lowest_price" property="lowestPrice" jdbcType="VARCHAR" />
+    <result column="cur_price" property="curPrice" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, app_id, lowest_price, cur_price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from push
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from push
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.nome.po.Push" >
+    insert into push (id, user_id, app_id, 
+      lowest_price, cur_price)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, 
+      #{lowestPrice,jdbcType=VARCHAR}, #{curPrice,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nome.po.Push" >
+    insert into push
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="lowestPrice != null" >
+        lowest_price,
+      </if>
+      <if test="curPrice != null" >
+        cur_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="lowestPrice != null" >
+        #{lowestPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="curPrice != null" >
+        #{curPrice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nome.po.Push" >
+    update push
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="lowestPrice != null" >
+        lowest_price = #{lowestPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="curPrice != null" >
+        cur_price = #{curPrice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nome.po.Push" >
+    update push
+    set user_id = #{userId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=INTEGER},
+      lowest_price = #{lowestPrice,jdbcType=VARCHAR},
+      cur_price = #{curPrice,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
