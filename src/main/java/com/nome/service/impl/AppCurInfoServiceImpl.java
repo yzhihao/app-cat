@@ -1,5 +1,7 @@
 package com.nome.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +20,11 @@ public class AppCurInfoServiceImpl extends BaseServiceImpl<AppCurInfo> implement
 	@Resource
 	public void setAppCurInfoMapper(AppCurInfoMapper appCurInfoMapper) {
 		super.setBaseDao(appCurInfoMapper);
+	}
+
+	@Override
+	public List<AppCurInfo> queryCurAllApps() {
+		return appCurInfoMapper.queryAll();
 	}
 	
 	

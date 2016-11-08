@@ -25,7 +25,6 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<jsonlib.version>2.4</jsonlib.version>
 		<aspectj.version>1.7.2</aspectj.version>
-		<org.mockito.version>1.9.5</org.mockito.version>
 		<org.mybatis.version>3.2.7</org.mybatis.version>
 		<c3p0-version>0.9.1.2</c3p0-version>
 	</properties>
@@ -53,6 +52,11 @@
 		<groupId>javax.annotation</groupId>
 		<artifactId>javax.annotation-api</artifactId>
 		<version>1.2</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter</artifactId>
 	</dependency>
 	
 	<dependency>
@@ -130,6 +134,12 @@
 		<artifactId>json-lib</artifactId>
 		<version>${jsonlib.version}</version>
 		<classifier>jdk15</classifier>
+	</dependency>
+	
+	<dependency>
+	    <groupId>javax.mail</groupId>
+	    <artifactId>mail</artifactId>
+	    <version>1.4.7</version>
 	</dependency>
    
   </dependencies>

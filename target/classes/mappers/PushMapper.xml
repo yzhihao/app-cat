@@ -11,6 +11,21 @@
   <sql id="Base_Column_List" >
     id, user_id, app_id, lowest_price, cur_price
   </sql>
+  
+  <select id="queryPushApp" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from push
+  </select>
+  
+  <delete id="deletePushs" parameterType="list">
+  	delete from push where id in
+  	<foreach collection="list" item="item" open="(" close=")" separator=",">
+  		#{item}
+  	</foreach>
+  </delete>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

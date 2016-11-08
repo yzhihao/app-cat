@@ -1,5 +1,7 @@
 package com.nome.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +20,11 @@ public class AppHistoryInfoServiceImpl extends BaseServiceImpl<AppHistoryInfo> i
 	@Resource
 	public void setAppHistoryInfoMapper(AppHistoryInfoMapper appHistoryInfoMapper) {
 		super.setBaseDao(appHistoryInfoMapper);
+	}
+
+	@Override
+	public List<AppHistoryInfo> queryHistoryPriceByAppId(int appId) {
+		return appHistoryInfoMapper.queryByAppId(appId);
 	}
 	
 	

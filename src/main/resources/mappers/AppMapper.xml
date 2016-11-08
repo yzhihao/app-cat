@@ -12,6 +12,33 @@
   <sql id="Base_Column_List" >
     id, name, img_path, app_url, developer, tag
   </sql>
+  
+  <select id="queryByTag" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from app
+  	where tag=#{tag} 
+  	order by id asc
+  	<if test="offset != null and limit != ''">
+  		limit #{offset},#{limit}
+  	</if>
+  </select>
+  
+  <select id="findLike" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from app
+  	where name like '%'||#{keyword}||'%' or developer like '%'||#{keyword}||'%'
+  	order by id asc
+  	<if test="offset != null and limit != ''">
+  		limit #{offset},#{limit}
+  	</if>
+  </select>
+  
+  
+  
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
