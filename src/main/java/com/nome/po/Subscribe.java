@@ -9,6 +9,10 @@ public class Subscribe {
 
     private String lowrest;
 
+    private String time;
+
+    private Integer iscancel;
+
     public Integer getId() {
         return id;
     }
@@ -41,10 +45,19 @@ public class Subscribe {
         this.lowrest = lowrest == null ? null : lowrest.trim();
     }
 
-	@Override
-	public String toString() {
-		return "Subscribe [id=" + id + ", userId=" + userId + ", appId=" + appId + ", lowrest=" + lowrest + "]";
-	}
-    
-    
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time == null ? null : time.trim();
+    }
+
+    public Integer getIscancel() {
+        return iscancel;
+    }
+
+    public void setIscancel(Integer iscancel) {
+        this.iscancel = iscancel;
+    }
 }

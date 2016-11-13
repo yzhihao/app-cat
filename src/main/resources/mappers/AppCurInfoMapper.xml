@@ -10,6 +10,14 @@
   <sql id="Base_Column_List" >
     id, price, time, app_id
   </sql>
+  
+  <select id="queryAll" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List"/>
+  	from app_cur_info
+  </select>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

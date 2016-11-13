@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.boot.SpringApplication;
@@ -14,13 +15,17 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 @SpringBootApplication
 //@EnableAspectJAutoProxy
+@EnableScheduling	//开启定时功能
 public class Application extends SpringBootServletInitializer {
+	
+	private static Logger logger = Logger.getLogger(Application.class);
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

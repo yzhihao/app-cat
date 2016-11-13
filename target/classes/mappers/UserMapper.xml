@@ -13,6 +13,71 @@
   <sql id="Base_Column_List" >
     id, name, password, email, status, cur_sub, all_sub
   </sql>
+  
+  <select id="queryByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from user where name=#{name}
+  </select>
+  
+  <select id="queryByNameAndPassword" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from user
+  	where name=#{name} and password=#{password} and status = 1
+  </select>
+  
+  <select id="queryNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from user
+  	where id=#{id}
+  </select>
+  
+  <select id="queryByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from user 
+  	where email=#{email}
+  </select>
+  
+  <select id="queryOne" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from user where id=#{id}
+  </select>
+  
+  <update id="updatePassword" parameterType="java.util.Map">
+  	update user set
+  	password=#{password}
+  	where id=#{id}
+  </update>
+  
+  <update id="updateCurNum" parameterType="java.lang.Integer">
+  	update user set
+  	cur_sub = cur_sub+1 
+  	where id=#{id}
+  </update>
+  
+  <update id="updateAllNum" parameterType="java.util.Map">
+  	update user set
+  	all_sub = all_sub + #{add} 
+  	where id=#{id}
+  </update>
+  
+  <update id="passValidate" parameterType="java.lang.String">
+  	update user set
+  	status = 1 
+  	where email=#{email}
+  </update>
+  
+  <update id="desCurNum" parameterType="java.lang.Integer">
+  	update user set
+  	cur_sub = cur_sub-1 
+  	where id=#{id}
+  </update>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
