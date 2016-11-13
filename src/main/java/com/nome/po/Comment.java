@@ -9,7 +9,7 @@ public class Comment {
 
     private String time;
 
-    private String contend;
+    private String content;
 
     public Integer getId() {
         return id;
@@ -44,17 +44,17 @@ public class Comment {
     }
 
     public String getContend() {
-        return contend;
+        return content;
     }
 
     public void setContend(String contend) {
-        this.contend = contend == null ? null : contend.trim();
+        this.content = contend == null ? null : contend.trim();
     }
 
 	@Override
 	public String toString() {
 		return "Comment [id=" + id + ", appId=" + appId + ", userId=" + userId + ", time=" + time + ", contend="
-				+ contend + "]";
+				+ content + "]";
 	}
     
     

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,7 @@ import com.nome.vo.result.Result;
  *
  */
 @RequestMapping("/question")
+@Controller
 public class QuestionController {
 	@Autowired
 	private QuestionService QuestionServiceImpl;
@@ -96,9 +98,9 @@ public class QuestionController {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
-	public Result updateQuestion(HttpServletRequest request, @RequestParam("command_id") int command_id) {
-		if (!ErrorUtil.dbError(QuestionServiceImpl.delete(command_id)).equals("")) {
-			return new Result(false, null, ErrorUtil.dbError(QuestionServiceImpl.delete(command_id)));
+	public Result updateQuestion(HttpServletRequest request, @RequestParam("question_id") int question_id) {
+		if (!ErrorUtil.dbError(QuestionServiceImpl.delete(question_id)).equals("")) {
+			return new Result(false, null, ErrorUtil.dbError(QuestionServiceImpl.delete(question_id)));
 		}
 		return new Result(true, null, null);
 	}

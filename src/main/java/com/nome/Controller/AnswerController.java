@@ -1,16 +1,20 @@
 package com.nome.Controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nome.po.Answer;
+import com.nome.po.Comment;
 import com.nome.service.AnswerService;
 import com.nome.util.ErrorUtil;
 import com.nome.vo.result.Result;
@@ -20,6 +24,7 @@ import com.nome.vo.result.Result;
  *
  */
 @RequestMapping("/answer")
+@Controller
 public class AnswerController {
 	@Autowired
 	private AnswerService AnswerServiceImpl;
@@ -45,10 +50,10 @@ public class AnswerController {
 	 * @param user_id
 	 * @return result
 	 */
-	@RequestMapping("/querylist")
+	@RequestMapping("/queryOnelist")
 	@ResponseBody
-	public Result queryAlistanswer(HttpServletRequest request, @RequestParam("user_id") int user_id) {
-		List<Answer> answerlist=AnswerServiceImpl.queryListPram(user_id);
+	public Result queryAlistanswer(HttpServletRequest request, @RequestParam("question_id") int question_id) {
+		List<Answer> answerlist=AnswerServiceImpl.queryListPram1(question_id);
 		return new Result(true, answerlist, "");
 	}
 
@@ -64,7 +69,12 @@ public class AnswerController {
 	@RequestMapping("/add")
 	@ResponseBody
 	public Result insertAnswer(HttpServletRequest request, @ModelAttribute("answer") Answer answer) {
-
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String data=df.format(new Date());
+		answer.setTime(data);
+		Answer answer1=AnswerServiceImpl.queryOne(answer);
+		if(answer1!=null)
+			return new Result(false, null, "您已经回答过这个问题了");
 		if (!ErrorUtil.dbError(AnswerServiceImpl.insert(answer)).equals("")) {
 			return new Result(false, null, ErrorUtil.dbError(AnswerServiceImpl.insert(answer)));
 		}

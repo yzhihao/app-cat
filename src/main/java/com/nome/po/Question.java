@@ -1,40 +1,69 @@
 package com.nome.po;
 
 public class Question {
-    private Integer id;
+	private Integer id;
 
-    private String time;
+	public String getTitle() {
+		return title;
+	}
 
-    private Integer userId;
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getAppId() {
+		return appId;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setAppId(Integer appId) {
+		this.appId = appId;
+	}
 
-    public String getTime() {
-        return time;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setTime(String time) {
-        this.time = time == null ? null : time.trim();
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public Integer getUserId() {
-        return userId;
-    }
+	private Integer userId;
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	private String title;
+
+	private Integer appId;
+
+	private String time;
+
+	private String content;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time == null ? null : time.trim();
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
 	@Override
 	public String toString() {
 		return "Question [id=" + id + ", time=" + time + ", userId=" + userId + "]";
 	}
-    
-    
+
 }
