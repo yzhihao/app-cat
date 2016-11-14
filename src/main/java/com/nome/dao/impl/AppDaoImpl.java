@@ -25,4 +25,16 @@ public class AppDaoImpl extends BaseDaoImpl<App> implements AppMapper {
 		return sqlSession.selectList(NameSpaceUtil.getNameSpace(clazz.getName()) + ".findLike" , map);
 	}
 
+	@Override
+	public int countApps(int tag) {
+		getclass();
+		return sqlSession.selectOne(NameSpaceUtil.getNameSpace(clazz.getName()) + ".countApps" , tag);
+	}
+
+	@Override
+	public int countFindLike(String keyword) {
+		getclass();
+		return sqlSession.selectOne(NameSpaceUtil.getNameSpace(clazz.getName()) + ".countFindLike" , keyword);
+	}
+
 }

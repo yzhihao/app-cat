@@ -67,7 +67,7 @@ public class SendEmail {
             msg.setRecipients(Message.RecipientType.TO, address);
             msg.setSubject("账号激活邮箱");
             msg.setSentDate(new Date());
-            msg.setContent(name + "用户你好，" +content + "<a href=\"http://localhost:8080/validateRegister?to=" + toEmail + "&valivate=" + password + "\">点击激活</a>", "text/html;charset=utf-8");
+            msg.setContent(name + "用户你好，" +content + "<a href=\"http://localhost:8080/user/validateRegister?email=" + toEmail + "&validate=" + password + "\">点击激活</a>", "text/html;charset=utf-8");
             Transport.send(msg);
         }
         catch (MessagingException mex) {

@@ -19,8 +19,8 @@
   	from app
   	where tag=#{tag} 
   	order by id asc
-  	<if test="offset != null and limit != ''">
-  		limit #{offset},#{limit}
+  	<if test="page.fromIndex != null and page.pageSize != ''">
+  		limit #{page.fromIndex},#{page.pageSize}
   	</if>
   </select>
   
@@ -28,15 +28,29 @@
   	select 
   	<include refid="Base_Column_List"/>
   	from app
-  	where name like '%'||#{keyword}||'%' or developer like '%'||#{keyword}||'%'
+  	where name like "%"||#{keyword}||"%"
+  	or developer like "%"||#{keyword}||"%"
   	order by id asc
-  	<if test="offset != null and limit != ''">
-  		limit #{offset},#{limit}
+  	<if test="page.fromIndex != null and page.pageSize != ''">
+  		limit #{page.fromIndex},#{page.pageSize}
   	</if>
   </select>
   
+  <select id="countApps" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	select count(*)
+  	from app
+  	where tag=#{tag} 
+  	order by id asc
+  </select>
   
-  
+  <select id="countFindLike" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	select 
+  	count(*)
+  	from app
+  	where name like "%"||#{keyword}||"%"
+  	or developer like "%"||#{keyword}||"%"
+  	order by id asc
+  </select>
   
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

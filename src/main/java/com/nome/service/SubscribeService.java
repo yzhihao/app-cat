@@ -17,4 +17,6 @@ public interface SubscribeService extends BaseService<Subscribe> {
 	public boolean cancel(int id,int userId);
 	
 	public int addSubscribe(int userId,String url,String price);
+	
+	public List<Subscribe> queryAllSubscribe(int userId);
 }

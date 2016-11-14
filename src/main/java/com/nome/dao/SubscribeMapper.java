@@ -19,4 +19,6 @@ public interface SubscribeMapper extends BaseDao<Subscribe> {
 	public int cancel(int id);
 
 	public int recall(int id);
+	
+	public List<Subscribe> queryAllSubscribe(int userId);
 }

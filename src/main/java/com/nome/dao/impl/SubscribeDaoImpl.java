@@ -48,5 +48,11 @@ public class SubscribeDaoImpl extends BaseDaoImpl<Subscribe> implements Subscrib
 		getclass ();
 		return sqlSession.update(NameSpaceUtil.getNameSpace(clazz.getName()) + ".recall", id);
 	}
+
+	@Override
+	public List<Subscribe> queryAllSubscribe(int userId) {
+		getclass ();
+		return sqlSession.selectList(NameSpaceUtil.getNameSpace(clazz.getName()) + ".queryAllSubscribe", userId);
+	}
 	
 }

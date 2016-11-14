@@ -16,13 +16,14 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserMapper {
 
 	@Override
 	public List<User> queryByName(String name) {
-		getclass ();
+		getclass();
 		return sqlSession.selectList(NameSpaceUtil.getNameSpace(clazz.getName()) + ".queryByName", name);
 	}
 
 	@Override
 	public User queryByNameAndPassword(Map<String, Object> map) {
-		getclass ();
+		getclass();
+		System.out.println("name = "+map.get("name"));
 		return sqlSession.selectOne(NameSpaceUtil.getNameSpace(clazz.getName()) + ".queryByNameAndPassword" ,map);
 	}
 
@@ -34,37 +35,37 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserMapper {
 
 	@Override
 	public User queryByEmail(String email) {
-		getclass ();
+		getclass();
 		return sqlSession.selectOne(NameSpaceUtil.getNameSpace(clazz.getName()) + ".queryByEmail", email);
 	}
 
 	@Override
 	public int updatePassword(Map<String, Object> map) {
-		getclass ();
+		getclass();
 		return sqlSession.update(NameSpaceUtil.getNameSpace(clazz.getName()) + ".updatePassword" , map);
 	}
 
 	@Override
 	public int updateCurNum(int userId) {
-		getclass ();
+		getclass();
 		return sqlSession.update(NameSpaceUtil.getNameSpace(clazz.getName()) + ".updateCurNum",userId);
 	}
 
 	@Override
 	public int updateAllNum(Map<String, Object> map) {
-		getclass ();
+		getclass();
 		return sqlSession.update(NameSpaceUtil.getNameSpace(clazz.getName()) + ".updateAllNum" , map);
 	}
 
 	@Override
 	public int passValidate(String email) {
-		getclass ();
+		getclass();
 		return sqlSession.update(NameSpaceUtil.getNameSpace(clazz.getName()) + ".passValidate" , email);
 	}
 
 	@Override
 	public int desCurNum(int id) {
-		getclass ();
+		getclass();
 		return sqlSession.update(NameSpaceUtil.getNameSpace(clazz.getName()) + ".desCurNum" , id);
 	}
 

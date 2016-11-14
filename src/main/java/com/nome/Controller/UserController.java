@@ -16,6 +16,7 @@ import com.nome.vo.UserVo;
 import com.nome.vo.result.Result;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 	
 	@Resource
@@ -109,9 +110,9 @@ public class UserController {
 	 */
 	@RequestMapping("/validateRegister")
 	@ResponseBody
-	public Result validateRegister(HttpSession session,String email,String valivate) {
+	public Result validateRegister(HttpSession session,String email,String validate) {
 		Result result = new Result();
-		result.setResult(userService.validate(email, valivate));
+		result.setResult(userService.validate(email, validate));
 		return result;
 	}
 	
@@ -196,15 +197,15 @@ public class UserController {
 	/**
 	 * 增加用户的总订阅数
 	 * @param session
-	 * @param add		增加的数目
+	 * @param type		增加类型    0表示到15,1表示增加到20,
 	 * @param userId	用户id
 	 * @return
 	 */
 	@RequestMapping("/addSubscribeNum")
 	@ResponseBody
-	public Result addSubscribeNum(HttpSession session , int add , int userId) {
+	public Result addSubscribeNum(HttpSession session , int type, int userId) {
 		Result result = new Result();
-		boolean statement = userService.updateAllNum(add, add);
+		boolean statement = userService.updateAllNum(userId, type);
 		result.setResult(statement);
 		return result;
 	}

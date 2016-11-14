@@ -6,7 +6,7 @@ import com.nome.service.base.BaseService;
 public interface UserService extends BaseService<User> {
 	public boolean register(String name , String password , String email);
 	
-	public boolean updateAllNum(int id , int add);
+	public boolean updateAllNum(int id , int type);
 	
 	public User login(String name ,String password);
 	

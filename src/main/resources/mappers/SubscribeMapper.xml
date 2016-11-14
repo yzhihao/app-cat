@@ -50,6 +50,13 @@
     update subscribe set iscancel=0
     where id=#{id}
   </update>
+  
+  <select id="queryAllSubscribe" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from subscribe
+  	where user_id=#{userId}
+  </select>
 
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

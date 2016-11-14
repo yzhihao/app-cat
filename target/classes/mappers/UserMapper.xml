@@ -61,7 +61,7 @@
   
   <update id="updateAllNum" parameterType="java.util.Map">
   	update user set
-  	all_sub = all_sub + #{add} 
+  	all_sub = #{add} 
   	where id=#{id}
   </update>
   

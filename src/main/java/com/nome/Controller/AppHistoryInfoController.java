@@ -10,6 +10,7 @@ import com.nome.service.AppHistoryInfoService;
 import com.nome.vo.result.Result;
 
 @Controller
+@RequestMapping("/appHistoryInfo")
 public class AppHistoryInfoController {
 
 	@Resource

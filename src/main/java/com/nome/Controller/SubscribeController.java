@@ -14,6 +14,7 @@ import com.nome.util.ConnectUtil;
 import com.nome.vo.result.Result;
 
 @Controller
+@RequestMapping("/subscribe")
 public class SubscribeController {
 
 	@Resource
@@ -98,6 +99,23 @@ public class SubscribeController {
 		
 		return result;
 	}
+	
+	
+	/**
+	 * 查询该用户的历史订阅记录
+	 * @param userId	用户的id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/queryAllSubscribe")
+	public Result queryAllSubscribe(int userId) {
+		Result result = new Result();
+		List<Subscribe> list = subscribeService.queryAllSubscribe(userId);
+		result.setData(list);
+		result.setResult(true);	
+		return result;
+	}
+	
 	
 	/**
 	 * 用来判断用户输入的URL是否为指定网站的有效链接

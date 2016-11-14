@@ -142,9 +142,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	}
 
 	@Override
-	public boolean updateAllNum(int id, int add) {
-		if(add > 0) {
+	public boolean updateAllNum(int id, int type) {
+		int add = 0;
+		if(type == 0 || type == 1) {
 			Map<String,Object> map = new HashMap<String,Object>();
+			add = (type+1)*5 + 10; 
 			map.put("id", id);
 			map.put("add", add);
 			if(userMapper.updateAllNum(map) == 1) return true;

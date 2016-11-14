@@ -10,6 +10,7 @@ import com.nome.service.PushService;
 import com.nome.vo.result.Result;
 
 @Controller
+@RequestMapping("/push")
 public class PushController {
 
 	@Resource

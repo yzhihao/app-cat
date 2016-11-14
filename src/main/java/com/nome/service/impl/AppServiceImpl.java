@@ -12,6 +12,7 @@ import com.nome.dao.AppMapper;
 import com.nome.po.App;
 import com.nome.service.AppService;
 import com.nome.service.base.impl.BaseServiceImpl;
+import com.nome.util.PageUtil;
 
 @Service
 public class AppServiceImpl extends BaseServiceImpl<App> implements AppService {
@@ -24,28 +25,27 @@ public class AppServiceImpl extends BaseServiceImpl<App> implements AppService {
 		super.setBaseDao(appMapper);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<App> queryByTag(int tag, int offset, int limit) {
+	public PageUtil queryByTag(int tag, PageUtil page) {
 		Map<String,Object> map = new HashMap<String,Object>();
-		
+		page.setRecordCount(appMapper.countApps(tag));
 		map.put("tag", tag);
-		map.put("offset", offset);
-		map.put("limit", limit);
-		
-		return appMapper.queryByTag(map);
+		map.put("page", page);
+		page.setObjectLists(appMapper.queryByTag(map));
+		return page;
 		
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<App> findLike(String keyword,int offset,int limit) {
+	public PageUtil findLike(String keyword,PageUtil page) {
 		Map<String,Object> map = new HashMap<String,Object>();
-		
+		page.setRecordCount(appMapper.countFindLike(keyword));
 		map.put("keyword", keyword);
-		map.put("offset", offset);
-		map.put("limit", limit);
-		
-		
-		return appMapper.findLike(map);
+		map.put("page", page);
+		page.setObjectLists(appMapper.findLike(map));
+		return page;
 	}
 	
 	

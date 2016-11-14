@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nome.service.AppCurInfoService;
+import com.nome.util.PageUtil;
 import com.nome.vo.result.Result;
 
 @Controller
+@RequestMapping("/appCurInfo")
 public class AppCurInfoController {
 
 	@Resource
@@ -21,12 +23,12 @@ public class AppCurInfoController {
 	 */
 	@RequestMapping("/queryCurApp")
 	@ResponseBody
-	public Result queryCurApp() {
+	public Result queryCurApp(PageUtil page) {
 		
 		//需要分页
 		Result result = new Result();
 		
-		result.setData(appCurInfoService.queryCurAllApps());
+		result.setData(appCurInfoService.queryCurAllApps(page));
 		result.setResult(true);
 		return result;
 	}

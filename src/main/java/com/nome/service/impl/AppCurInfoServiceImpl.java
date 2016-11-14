@@ -1,6 +1,7 @@
 package com.nome.service.impl;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,6 +11,7 @@ import com.nome.dao.AppCurInfoMapper;
 import com.nome.po.AppCurInfo;
 import com.nome.service.AppCurInfoService;
 import com.nome.service.base.impl.BaseServiceImpl;
+import com.nome.util.PageUtil;
 
 @Service
 public class AppCurInfoServiceImpl extends BaseServiceImpl<AppCurInfo> implements AppCurInfoService {
@@ -23,8 +25,13 @@ public class AppCurInfoServiceImpl extends BaseServiceImpl<AppCurInfo> implement
 	}
 
 	@Override
-	public List<AppCurInfo> queryCurAllApps() {
-		return appCurInfoMapper.queryAll();
+	public PageUtil queryCurAllApps(PageUtil page) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		page.setRecordCount(appCurInfoMapper.count());
+		map.put("page", page);
+		page.setObjectLists(appCurInfoMapper.queryAll(map));
+		return page;
 	}
 	
 	

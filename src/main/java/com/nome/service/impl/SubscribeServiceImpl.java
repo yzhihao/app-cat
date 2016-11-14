@@ -112,6 +112,11 @@ public class SubscribeServiceImpl extends BaseServiceImpl<Subscribe> implements 
 			return 3;
 		}
 	}
+
+	@Override
+	public List<Subscribe> queryAllSubscribe(int userId) {
+		return subscribeMapper.queryAllSubscribe(userId);
+	}
 	
 	
 	

@@ -11,5 +11,9 @@ public interface AppMapper extends BaseDao<App> {
 	
 	public List<App> findLike(Map<String,Object> map);
 	
+	public int countApps(int tag);
+	
+	public int countFindLike(String keyword);
+	
 	
 }
