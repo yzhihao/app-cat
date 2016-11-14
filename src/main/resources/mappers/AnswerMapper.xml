@@ -3,22 +3,23 @@
 <mapper namespace="com.nome.dao.AnswerMapper" >
   <resultMap id="BaseResultMap" type="com.nome.po.Answer" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="app_id" property="appId" jdbcType="INTEGER" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="question_id" property="questionId" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.nome.po.Answer" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, title, app_id, user_id, time, question_id
-  </sql>
+ 
   
   <!-- 按参数得到用户所有回答-->
 	<select id="queryListPram" resultMap="BaseResultMap"  parameterType="java.lang.Integer" >
 		select *  from answer where user_id = #{userId}
+	</select>
+	
+	<!--  按参数得到用户回答-->
+	<select id="queryOne" resultMap="BaseResultMap"  parameterType="com.nome.po.Answer" >
+		select * from answer where question_id=#{questionId} and user_id=#{userId}
 	</select>
   
   <!-- 按参数得到特定问题所有回答-->
@@ -26,6 +27,9 @@
 		select *  from answer where  question_id = #{questionId}
 	</select>
   
+  <sql id="Base_Column_List" >
+    id, time, user_id, question_id
+  </sql>
   <sql id="Blob_Column_List" >
     content
   </sql>
@@ -42,12 +46,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.nome.po.Answer" >
-    insert into answer (id, title, app_id, 
-      user_id, time, question_id, 
-      content)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{appId,jdbcType=INTEGER}, 
-      #{userId,jdbcType=INTEGER}, #{time,jdbcType=VARCHAR}, #{questionId,jdbcType=INTEGER}, 
-      #{content,jdbcType=LONGVARCHAR})
+    insert into answer (id, time, user_id, 
+      question_id, content)
+    values (#{id,jdbcType=INTEGER}, #{time,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{questionId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.nome.po.Answer" >
     insert into answer
@@ -55,17 +57,11 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="appId != null" >
-        app_id,
+      <if test="time != null" >
+        time,
       </if>
       <if test="userId != null" >
         user_id,
-      </if>
-      <if test="time != null" >
-        time,
       </if>
       <if test="questionId != null" >
         question_id,
@@ -78,17 +74,11 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="appId != null" >
-        #{appId,jdbcType=INTEGER},
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="time != null" >
-        #{time,jdbcType=VARCHAR},
       </if>
       <if test="questionId != null" >
         #{questionId,jdbcType=INTEGER},
@@ -101,17 +91,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.nome.po.Answer" >
     update answer
     <set >
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="appId != null" >
-        app_id = #{appId,jdbcType=INTEGER},
+      <if test="time != null" >
+        time = #{time,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="time != null" >
-        time = #{time,jdbcType=VARCHAR},
       </if>
       <if test="questionId != null" >
         question_id = #{questionId,jdbcType=INTEGER},
@@ -124,20 +108,16 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.nome.po.Answer" >
     update answer
-    set title = #{title,jdbcType=VARCHAR},
-      app_id = #{appId,jdbcType=INTEGER},
+    set time = #{time,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
-      time = #{time,jdbcType=VARCHAR},
       question_id = #{questionId,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.nome.po.Answer" >
     update answer
-    set title = #{title,jdbcType=VARCHAR},
-      app_id = #{appId,jdbcType=INTEGER},
+    set time = #{time,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
-      time = #{time,jdbcType=VARCHAR},
       question_id = #{questionId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

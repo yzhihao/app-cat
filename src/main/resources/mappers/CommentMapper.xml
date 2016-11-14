@@ -6,7 +6,7 @@
     <result column="app_id" property="appId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="time" property="time" jdbcType="VARCHAR" />
-    <result column="contend" property="contend" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Base_Column_List" >
@@ -16,6 +16,16 @@
   <!--  按参数得到用户的评论-->
 	<select id="queryListPram" resultMap="BaseResultMap"  parameterType="java.lang.Integer" >
 		select *  from comment where user_id = #{userId}
+	</select>
+	
+	<!--  按参数得到用户的评论-->
+	<select id="queryOne" resultMap="BaseResultMap"  parameterType="com.nome.dao.CommentMapper" >
+		select *  from comment where user_id = #{userId} and app_id=#{appId}
+	</select>
+	
+	 <!--  得到单个app的所以评论-->
+	<select id="queryListPram1" resultMap="BaseResultMap"  parameterType="java.lang.Integer" >
+		select *  from comment where app_id = #{appId}
 	</select>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

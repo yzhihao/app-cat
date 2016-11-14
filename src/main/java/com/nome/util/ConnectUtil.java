@@ -54,9 +54,7 @@ public class ConnectUtil {
 	    try {  
 	    	 URL url2 = new URL(url);  
 	         InputStream in = url2.openStream();  
-	         System.out.println("连接可用");  
 	    } catch (Exception e1) {  
-	         System.out.println("连接打不开!");  
 	         return false;  
 	    }  
 		return true;

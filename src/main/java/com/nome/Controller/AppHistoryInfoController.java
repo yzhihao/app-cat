@@ -24,7 +24,6 @@ public class AppHistoryInfoController {
 	@RequestMapping("queryHistoryPriceByAppId")
 	@ResponseBody
 	public Result queryHistoryPriceByAppId(int appId) {
-		
 		Result result = new Result();
 		result.setData(appHistoryInfoService.queryHistoryPriceByAppId(appId));
 		result.setResult(true);

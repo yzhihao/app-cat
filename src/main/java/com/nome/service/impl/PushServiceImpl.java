@@ -1,10 +1,13 @@
 package com.nome.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +32,16 @@ public class PushServiceImpl extends BaseServiceImpl<Push> implements PushServic
 	
 	@Resource
 	private AppMapper appMapper;
+	
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	private static final Logger logger = Logger.getLogger(PushServiceImpl.class);
 
 	@Resource
 	public void setPushMapper(PushMapper pushMapper) {
 		this.pushMapper = pushMapper;
 	}
 
-	@Scheduled(cron="30 * *  * * ? ")
+	@Scheduled(cron="* 30 *  * * ? ")
 	@Override
 	public void push() {
 		if(pushMapper == null) return;
@@ -53,7 +59,10 @@ public class PushServiceImpl extends BaseServiceImpl<Push> implements PushServic
 				SendEmail.sendPush(user.getEmail(), app.getName(), push);
 				list.add(push.getId());
 			}
-			pushMapper.deletePushs(list);	
+			pushMapper.deletePushs(list);
+			for(int i=0;i<list.size();i++) {
+				logger.info("push: " + list.get(i) + " " + sdf.format(new Date()));
+			}
 		}
 	}
 

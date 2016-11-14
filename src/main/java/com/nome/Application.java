@@ -109,7 +109,6 @@ public class Application extends SpringBootServletInitializer {
 	 */
 	@Bean
 	public CharacterEncodingFilter characterEncodingFilter() {
-
 		CharacterEncodingFilter filter = new CharacterEncodingFilter();
 		filter.setEncoding("UTF-8");
 		return filter;

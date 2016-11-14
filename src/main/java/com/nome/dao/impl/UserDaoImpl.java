@@ -69,4 +69,10 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserMapper {
 		return sqlSession.update(NameSpaceUtil.getNameSpace(clazz.getName()) + ".desCurNum" , id);
 	}
 
+	@Override
+	public int motifyUserName(Map<String, Object> map) {
+		getclass();
+		return sqlSession.update(NameSpaceUtil.getNameSpace(clazz.getName()) + ".motifyUserName" , map);
+	}
+
 }

@@ -53,6 +53,12 @@
   	where id=#{id}
   </update>
   
+  <update id="motifyUserName" parameterType="java.util.Map">
+  	update user set
+  	name=#{name}
+  	where id=#{id}
+  </update>
+  
   <update id="updateCurNum" parameterType="java.lang.Integer">
   	update user set
   	cur_sub = cur_sub+1 

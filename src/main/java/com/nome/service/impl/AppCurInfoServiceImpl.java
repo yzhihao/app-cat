@@ -24,6 +24,7 @@ public class AppCurInfoServiceImpl extends BaseServiceImpl<AppCurInfo> implement
 		super.setBaseDao(appCurInfoMapper);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public PageUtil queryCurAllApps(PageUtil page) {
 		

@@ -24,11 +24,8 @@ public class PushController {
 	@ResponseBody
 	public Result queryPushApp() {
 		Result result =new Result();
-		
 		result.setData(pushService.queryPushApp());
 		result.setResult(true);
-		
-		
 		return result;
 	}
 	

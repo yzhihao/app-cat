@@ -1,8 +1,12 @@
 package com.nome.Controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,9 +23,12 @@ import com.nome.vo.result.Result;
 @RequestMapping("/user")
 public class UserController {
 	
+	private static final Logger logger = Logger.getLogger(UserController.class);
+	
 	@Resource
 	private UserService userService;
 	
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	
 	/**
 	 * 测试框架
@@ -75,7 +82,6 @@ public class UserController {
 	@ResponseBody
 	public Result login(HttpSession session,String userName,String password) {
 		Result result = new Result();
-		System.out.println(MD5Util.toMD5(password));
 		if(!StringUtil.isUserName(userName)) {
 			result.setResult(false);
 			result.setInformation("用户名格式不正确");
@@ -90,6 +96,7 @@ public class UserController {
 				session.setAttribute("loginStatus", "success");
 				result.setResult(true);
 				result.setData(UserVo.changeToVo(user));
+				logger.info("login: " + userName + " " + sdf.format(new Date()) );
 			}
 			else {
 				result.setResult(false);
@@ -121,7 +128,7 @@ public class UserController {
 	 * 用于已经知道密码要修改密码的用户进行密码验证
 	 * @param session
 	 * @param userName			用户名
-	 * @param password		密码
+	 * @param password			密码
 	 * @return
 	 */
 	@RequestMapping("/validatePassword")
@@ -186,10 +193,13 @@ public class UserController {
 	@ResponseBody
 	public Result logout(HttpSession session) {
 		Result result = new Result();
-		
-		session.removeAttribute("curUser");
-		session.setAttribute("loginStatus", "unsuccess");
+		User user = (User)session.getAttribute("curUser");
+		String userName =  user.getName();
+		session.invalidate();
+//		session.removeAttribute("curUser");
+//		session.setAttribute("loginStatus", "unsuccess");
 		result.setResult(true);
+		logger.info("logout: " + userName + " " + sdf.format(new Date()));
 		return result;
 	}
 	
@@ -209,5 +219,29 @@ public class UserController {
 		result.setResult(statement);
 		return result;
 	}
+	
+	
+	/**
+	 * 修改用户名			16-11-14
+	 * @param session
+	 * @param newUserName	新的用户名
+	 * @param userId		用户的id
+	 * @return
+	 */
+	@RequestMapping("/motifyUserName")
+	@ResponseBody
+	public Result motifyUserName(HttpSession session , String newUserName, int userId) {
+		Result result = new Result();
+		boolean statement = userService.motifyUserName(newUserName, userId);
+		if(statement) {
+			result.setResult(true);
+		} else {
+			result.setResult(false);
+			result.setInformation("该用户名已被占用了");
+		}
+		
+		return result;
+	}
+	
 	
 }

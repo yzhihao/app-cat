@@ -11,8 +11,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nome.dao.AppMapper;
 import com.nome.dao.SubscribeMapper;
 import com.nome.dao.UserMapper;
+import com.nome.po.App;
 import com.nome.po.Subscribe;
 import com.nome.po.User;
 import com.nome.service.SubscribeService;
@@ -28,6 +30,9 @@ public class SubscribeServiceImpl extends BaseServiceImpl<Subscribe> implements 
 	
 	@Resource
 	private UserMapper userMapper;
+	
+	@Resource
+	private AppMapper appMapper;
 
 	@Resource
 	public void setSubscribeMapper(SubscribeMapper subscribeMapper) {
@@ -116,6 +121,40 @@ public class SubscribeServiceImpl extends BaseServiceImpl<Subscribe> implements 
 	@Override
 	public List<Subscribe> queryAllSubscribe(int userId) {
 		return subscribeMapper.queryAllSubscribe(userId);
+	}
+
+	@Override
+	public int addSubscribeByAppId(int appId, int userId, String price) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date date = new Date();
+		map.put("userId", userId);
+		map.put("appId", appId);
+		App app = appMapper.queryOne(appId);
+		if(app == null) return 4;
+		User temp = userMapper.queryOne(userId);
+		if(temp.getCurSub()<temp.getAllSub()) {
+			List<Subscribe> list = subscribeMapper.checkRepeat(map);
+			if(!list.isEmpty()) {
+				if(list.get(0).getIscancel() == 1) {
+					subscribeMapper.recall(list.get(0).getId());
+					userMapper.updateCurNum(list.get(0).getUserId());
+					return 1;
+				} else return 2;
+			} else {
+				Subscribe sub = new Subscribe();
+				sub.setAppId(appId);
+				sub.setUserId(userId);
+				sub.setLowrest(price);
+				sub.setTime(sdf.format(date));
+				sub.setIscancel(0);
+				subscribeMapper.insert(sub);
+				userMapper.updateCurNum(userId);
+			}
+			return 1;
+		} else {
+			return 3;
+		}
 	}
 	
 	

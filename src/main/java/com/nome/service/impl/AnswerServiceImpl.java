@@ -26,7 +26,5 @@ public class AnswerServiceImpl extends BaseServiceImpl<Answer> implements Answer
 	public List<Answer> queryListPram1(int user_id) {
 		return answerMapper.queryListPram1(user_id);
 	}
-	
-	
-	
+
 }

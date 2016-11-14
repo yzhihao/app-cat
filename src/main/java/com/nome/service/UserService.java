@@ -17,4 +17,6 @@ public interface UserService extends BaseService<User> {
 	public int motifyPassword(String name,String newpassword,String validate,int type);
 	
 	public String forgetPassword(String email);
+	
+	public boolean motifyUserName(String newUserName , int userId);
 }

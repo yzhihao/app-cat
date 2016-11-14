@@ -1,10 +1,16 @@
 package com.nome.dao.base.impl;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.nome.dao.base.BaseDao;
@@ -19,9 +25,10 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		
 	@Resource
 	protected SqlSessionTemplate sqlSession;
-
 	protected Class<T> clazz;
 	   
+	
+	
 	@SuppressWarnings("unchecked")
 	public void getclass () {
 		ParameterizedType pt =(ParameterizedType) this.getClass().getGenericSuperclass();
@@ -37,6 +44,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	
 	@Override
 	public int insert(T t) {
+		
 		getclass ();
 		return  sqlSession.insert(NameSpaceUtil.getNameSpace(clazz.getName())+".insert",t);
 	}

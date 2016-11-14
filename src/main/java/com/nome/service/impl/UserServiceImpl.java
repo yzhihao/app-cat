@@ -1,15 +1,16 @@
 package com.nome.service.impl;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +31,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	
 	@Resource
 	private ValidateService validateService;
-
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+	
 	@Resource
 	public void setUserMapper(UserMapper userMapper) {
 		super.setBaseDao(userMapper);
@@ -89,6 +92,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		
 		if(password.equals(user.getPassword())) {
 			userMapper.passValidate(email);
+			logger.info("register: " + email);
 		}
 		
 		return true;
@@ -113,7 +117,6 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		String MD5Password = MD5Util.toMD5(newpassword);
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<User> userList = userMapper.queryByName(name);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date date = new Date();
 		if(userList.isEmpty()) return 0;
 		User user = userList.get(0);
@@ -136,6 +139,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 			for(int i=0;i<tempList.size();i++) {				
 				validateService.deleteValidate(tempList.get(i).getId());
 			}
+			logger.info("motifypassword: " + user.getId() + " " + sdf.format(new Date()));
 			return 1;
 		} 
 		return 0;
@@ -149,7 +153,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 			add = (type+1)*5 + 10; 
 			map.put("id", id);
 			map.put("add", add);
-			if(userMapper.updateAllNum(map) == 1) return true;
+			if(userMapper.updateAllNum(map) == 1) {
+				logger.info("changesubscribetype: " + id + " " + sdf.format(new Date()));
+				return true;
+			}
 			else return false;
 		} else return false;
 	}
@@ -161,6 +168,22 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		String validate = validateService.addValidate(user.getId(), 2);  //对于忘记密码的类型是2
 		SendEmail.sendFindPassword(email, validate);
 		return validate;
+	}
+
+	@Override
+	public boolean motifyUserName(String newUserName, int userId) {
+		List<User> userList = userMapper.queryByName(newUserName);
+		if(userList.isEmpty()) {
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("id", userId);
+			map.put("name", newUserName);
+			if(userMapper.motifyUserName(map) == 1) {
+				return true;
+			} else return false;
+			
+		} else {
+			return false;
+		}
 	}
 	
 	

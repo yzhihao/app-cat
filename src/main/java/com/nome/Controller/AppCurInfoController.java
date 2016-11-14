@@ -21,13 +21,11 @@ public class AppCurInfoController {
 	 * 查询当前热门的app  包含国内和国外
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("/queryCurApp")
 	@ResponseBody
 	public Result queryCurApp(PageUtil page) {
-		
-		//需要分页
 		Result result = new Result();
-		
 		result.setData(appCurInfoService.queryCurAllApps(page));
 		result.setResult(true);
 		return result;

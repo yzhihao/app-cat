@@ -1,10 +1,14 @@
 package com.nome.Controller;
 
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +24,7 @@ import com.nome.vo.result.Result;
  *
  */
 @RequestMapping("/Comment")
+@Controller
 public class CommentController {
 	@Autowired
 	private CommentService CommentServiceImpl;
@@ -60,11 +65,18 @@ public class CommentController {
 	 * @param request
 	 * @param comment
 	 * @return result
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public Result insertComment(HttpServletRequest request, @ModelAttribute("Comment") Comment comment) {
-
+	public Result insertComment(HttpServletRequest request, @ModelAttribute("comment")Comment comment) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String data=df.format(new Date());
+		comment.setTime(data);
+		Comment comment1=CommentServiceImpl.queryOne(comment);
+		System.out.println(comment1);
+		if(comment1!=null)
+			return new Result(false, null, "不能重复评论同一个app");
 		if (!ErrorUtil.dbError(CommentServiceImpl.insert(comment)).equals("")) {
 			return new Result(false, null, ErrorUtil.dbError(CommentServiceImpl.insert(comment)));
 		}
@@ -80,7 +92,10 @@ public class CommentController {
 	 */
 	@RequestMapping("/update")
 	@ResponseBody
-	public Result updateComment(HttpServletRequest request, @ModelAttribute("Comment") Comment comment) {
+	public Result updateComment(HttpServletRequest request, @ModelAttribute("comment") Comment comment) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String data=df.format(new Date());
+		comment.setTime(data);
 		if (!ErrorUtil.dbError(CommentServiceImpl.update(comment)).equals("")) {
 			return new Result(false, null, ErrorUtil.dbError(CommentServiceImpl.update(comment)));
 		}

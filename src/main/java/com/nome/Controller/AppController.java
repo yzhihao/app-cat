@@ -23,6 +23,7 @@ public class AppController {
 	 * @param page		每页的信息
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("/queryByTag")
 	@ResponseBody
 	public Result queryByTag(int tag, PageUtil page) {
@@ -40,6 +41,7 @@ public class AppController {
 	 * @param page			每页的信息
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("/findLike")
 	@ResponseBody
 	public Result findLike(String keyword,PageUtil page) {

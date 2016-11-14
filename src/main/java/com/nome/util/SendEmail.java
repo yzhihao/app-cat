@@ -58,14 +58,11 @@ public class SendEmail {
     public static void send(String toEmail , String content ,String password,String name) {
         Session session = getSession();
         try {
-            // Instantiate a message
             Message msg = new MimeMessage(session);
-
-            //Set message attributes
             msg.setFrom(new InternetAddress(FROM));
             InternetAddress[] address = {new InternetAddress(toEmail)};
             msg.setRecipients(Message.RecipientType.TO, address);
-            msg.setSubject("账号激活邮箱");
+            msg.setSubject("Account activation mailbox");
             msg.setSentDate(new Date());
             msg.setContent(name + "用户你好，" +content + "<a href=\"http://localhost:8080/user/validateRegister?email=" + toEmail + "&validate=" + password + "\">点击激活</a>", "text/html;charset=utf-8");
             Transport.send(msg);
@@ -83,13 +80,11 @@ public class SendEmail {
     public static void sendPush(String toEmail,String name,Push push) {
         Session session = getSession();
         try {
-            // Instantiate a message
             Message msg = new MimeMessage(session);
-            //Set message attributes
             msg.setFrom(new InternetAddress(FROM));
             InternetAddress[] address = {new InternetAddress(toEmail)};
             msg.setRecipients(Message.RecipientType.TO, address);
-            msg.setSubject("降价提醒");
+            msg.setSubject("Price reminder");
             msg.setSentDate(new Date());
             msg.setContent("你好，您订阅的" + name + "\n 已经降到 " + push.getCurPrice() + ",比您的最低价:" + push.getLowestPrice() + "低" , "text/html;charset=utf-8");
             Transport.send(msg);
@@ -107,13 +102,11 @@ public class SendEmail {
     public static void sendFindPassword(String toEmail,String validate) {
         Session session = getSession();
         try {
-            // Instantiate a message
             Message msg = new MimeMessage(session);
-            //Set message attributes
             msg.setFrom(new InternetAddress(FROM));
             InternetAddress[] address = {new InternetAddress(toEmail)};
             msg.setRecipients(Message.RecipientType.TO, address);
-            msg.setSubject("更改密码");
+            msg.setSubject("Change password");
             msg.setSentDate(new Date());
             msg.setContent("你好，您修改密码的验证码为" + validate + ",请在48小时内进行修改 ", "text/html;charset=utf-8");
             Transport.send(msg);
@@ -133,39 +126,31 @@ public class SendEmail {
     	
     	Session session = getSession();
         try {
-            // Instantiate a message
             Message msg = new MimeMessage(session);
 
-            //Set message attributes
             msg.setFrom(new InternetAddress(FROM));
             InternetAddress[] address = {new InternetAddress(toEmail)};
             msg.setRecipients(Message.RecipientType.TO, address);
-            msg.setSubject("账号激活邮箱");
+            msg.setSubject("Account activation mailbox");
             msg.setSentDate(new Date());
             
-             //创建邮件的正文  
             MimeBodyPart text = new MimeBodyPart();  
-             //setContent(“邮件的正文内容”,”设置邮件内容的编码方式”)  
             text.setContent("此邮件为系统自动发送<img src='cid:a'>",  
                     "text/html;charset=gb2312");  
-            
-         // 创建图片  
             MimeBodyPart img = new MimeBodyPart();  
-            DataHandler dh = new DataHandler(new FileDataSource("F://picture//1.jpg"));//图片路径  
+            DataHandler dh = new DataHandler(new FileDataSource("F://picture//1.jpg"));
             img.setDataHandler(dh);  
             img.setContentID("a");  
             MimeMultipart mm = new MimeMultipart();  
             mm.addBodyPart(text);  
             mm.addBodyPart(img);  
-            mm.setSubType("related");// 设置正文与图片之间的关系  
+            mm.setSubType("related");
             
-            // 图班与正文的 body  
             MimeBodyPart all = new MimeBodyPart();  
             all.setContent(mm);  
       
             msg.setContent(mm);  
-            msg.saveChanges(); // 保存修改
-            //Send the message
+            msg.saveChanges(); 
             Transport ts = session.getTransport();
             ts.connect(HOST, FROM, PWD);
             ts.sendMessage(msg, msg.getAllRecipients());

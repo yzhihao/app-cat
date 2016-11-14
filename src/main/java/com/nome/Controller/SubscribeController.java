@@ -133,5 +133,32 @@ public class SubscribeController {
 		
 	}
 	
+	/**
+	 * 通过appid来订阅
+	 * @param appId			appid
+	 * @param userId		用户的id
+	 * @param price			可接受价格
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/addSubscribeByAppId")
+	public Result addSubscribeByAppId(int appId,int userId,String price) {
+		Result result = new Result();
+		int statement = subscribeService.addSubscribeByAppId(appId, userId, price);
+		if(statement == 1) {
+			result.setResult(true);
+		}
+		else if(statement == 2) {
+			result.setResult(false);
+			result.setInformation("该款app已经订阅了");
+		} else if(statement == 3) {
+			result.setResult(false);
+			result.setInformation("你的订阅次数已用完");
+		} else if(statement == 4) {
+			result.setResult(false);
+			result.setInformation("没有该app");
+		}
+		return result;
+	}
 	
 }

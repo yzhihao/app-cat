@@ -26,4 +26,6 @@ public interface UserMapper extends BaseDao<User> {
 	
 	public int desCurNum(int id);
 	
+	public int motifyUserName(Map<String,Object> map);
+	
 }
